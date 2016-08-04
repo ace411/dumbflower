@@ -1,0 +1,23 @@
+{
+    "name": "chemem/dumbflower",
+    "description": "Simple image manipulation library for PHP built atop the PHP GD Library",
+    "type": "library",
+    "license": "MIT",
+	"keywords": ["chemem"],
+    "authors": [
+        {
+            "name": "Lochemem Bruno Michael",
+            "email": "lochbm@gmail.com",
+			"role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+		"php": "^5.5 || ^7.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"DumbFlower\\" : "src"
+		}
+	}
+}
