@@ -8,9 +8,13 @@ $upload = new UploadFiles();
 
 $upload->setLocation();
 
+$upload->setSize(614400);
+
 $dirname = str_replace("\\", "/", dirname(__DIR__) . '/special/');
 
-$upload->shouldResize(true, $dirname);
+$upload->shouldResize(true, $dirname, 450, 350);
+
+$upload->setResizedImageQuality(75);
 
 $upload->setPrefix('mike_', 'resized_mike');
 
