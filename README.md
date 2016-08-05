@@ -8,7 +8,7 @@ Simple image manipulation library for PHP built atop the PHP GD Library
 
 ##Capabilities
 
-Since this package is subject to constant revision, it will continually be updated. The features on the list below are the core functionalities of the package.
+Since this package is subject to constant revision, it will continually be updated. The features on the list below are the core functionalities of dumbflower.
 
 -Image uploads (single and multiple) 
 
