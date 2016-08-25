@@ -1,15 +1,23 @@
 <?php 
 
-/*DumbFlower is a PHP package built by Lochemem Bruno Michael
- *The package is anchored on the PHP GD Library (Check your GD details with gd_info())
- *Features include: 
-	 **Image uploads (single and multiple) 
-	 **Image resizing (quality and size constraints considered) 
-	 **Image gallery generation 
-	 **Generating image filters (Eight filters)
-	 **Screen capture (screenshot functionality)
- *If you need any assistance, send an email to lochbm@gmail.com
-*/
+/**
+ * DumbFlower is a PHP package built by Lochemem Bruno Michael
+ * The package is anchored on the PHP GD Library (Check your GD details with gd_info())
+ *
+ * @package DumbFlower
+ * @author Lochemem Bruno Michael
+ *
+ *
+ * Features include: 
+	 - Image uploads (single and multiple) 
+	 - Image resizing (quality and size constraints considered) 
+	 - Image gallery generation 
+	 - Generating image filters (Eight filters)
+	 - Screen capture (screenshot functionality)
+ *
+ *	 
+ * If you need any assistance, send an email to lochbm@gmail.com
+ */
 
 namespace DumbFlower;
 
