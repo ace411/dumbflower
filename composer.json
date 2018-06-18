@@ -29,7 +29,12 @@
     },
 	"autoload": {
 		"psr-4": {
-			"Chemem\\DumbFlower\\" : "src"
+			"Chemem\\DumbFlower\\" : "src/"
 		}
-	}
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Chemem\\DumbFlower\\Tests\\": "tests/"
+        }
+    }
 }
