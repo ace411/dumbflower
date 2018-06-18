@@ -35,11 +35,21 @@
 	"autoload": {
 		"psr-4": {
 			"Chemem\\DumbFlower\\" : "src/"
-		}
+        },
+        "files": [
+            "src/Resize.php",
+            "src/Filters.php",
+            "src/Snapshot.php",
+            "src/Utilities.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
             "Chemem\\DumbFlower\\Tests\\": "tests/"
         }
+    },
+    "bin": ["dumbflower"],
+    "scripts": {
+        "test": "phpunit -c phpunit.xml"
     }
 }
