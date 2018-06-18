@@ -4,10 +4,14 @@
     "type": "library",
     "license": "MIT",
 	"keywords": [
+        "dumbflower",
+        "gd library",
         "chemem",
         "php-gd",
         "images",
         "image manipulation",
+        "edit images",
+        "img filters",
         "resize images",
         "color filters",
         "img"
