@@ -25,7 +25,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-		"php": ">=7.0",
+        "php": ">=7.0",
+        "ext-gd": "*",
         "chemem/bingo-functional": "~1"
     },
     "require-dev": {
