@@ -3,7 +3,15 @@
     "description": "Simple image manipulation library for PHP built atop the PHP GD Library",
     "type": "library",
     "license": "MIT",
-	"keywords": ["chemem"],
+	"keywords": [
+        "chemem",
+        "php-gd",
+        "images",
+        "image manipulation",
+        "resize images",
+        "color filters",
+        "img"
+    ],
     "authors": [
         {
             "name": "Lochemem Bruno Michael",
