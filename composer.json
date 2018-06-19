@@ -27,6 +27,7 @@
     "require": {
         "php": ">=7.0",
         "ext-gd": "*",
+        "ext-fileinfo": "*",
         "qaribou/immutable.php": "~1",
         "chemem/bingo-functional": "~1"
     },
