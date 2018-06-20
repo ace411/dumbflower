@@ -39,7 +39,9 @@
 			"Chemem\\DumbFlower\\" : "src/"
         },
         "files": [
+            "src/State.php",
             "src/Resize.php",
+            "src/Console.php",
             "src/Filters.php",
             "src/Snapshot.php",
             "src/Utilities.php"
