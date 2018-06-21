@@ -11,3 +11,9 @@ A simple image manipulation library.
 - PHP GD
 
 - PHP fileinfo extension
+
+## Important
+
+- The package is, at this point in time, still in development.
+
+- The console is not fully operational at the moment.
