@@ -14,6 +14,4 @@ A simple image manipulation library.
 
 ## Important
 
-- The package is, at this point in time, still in development.
-
-- The console is not fully operational at the moment.
+The package is, at this point in time, undergoing modification. It is, therefore, not usable in production.
