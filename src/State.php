@@ -25,12 +25,37 @@ const CONSOLE_COMMANDS = [
     'smoothen' => [
         'type' => 'filter',
         'hasDefault' => true,
+        'default' => DEFAULT_SMOOTH_FILTER
+    ],
+    'negate' => [
+        'type' => 'filter',
+        'hasDefault' => true,
+        'default' => []
+    ],
+    'grayscale' => [
+        'type' => 'filter',
+        'hasDefault' => true,
+        'default' => []
+    ],
+    'colorize' => [
+        'type' => 'filter',
+        'hasDefault' => true,
+        'default' => [DEFAULT_RED_FILTER, DEFAULT_GREEN_FILTER, DEFAULT_BLUE_FILTER]
+    ],
+    'contrast' => [
+        'type' => 'filter',
+        'hasDefault' => true,
+        'default' => DEFAULT_IMG_CONTRAST
+    ],
+    'emboss' => [
+        'type' => 'filter',
+        'hasDefault' => true,
         'default' => []
     ],
     'resize' => [
         'type' => 'resize',
-        'hasDefault' => true,
-        'default' => []
+        'hasDefault' => false,
+        'default' => null
     ],
     'help' => [
         'type' => 'help',
