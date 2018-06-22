@@ -8,6 +8,8 @@ A simple image manipulation library.
 
 ## Requirements
 
+- PHP 7 or greater
+
 - PHP GD
 
 - PHP fileinfo extension
