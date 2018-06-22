@@ -1,0 +1,24 @@
+title: dumbflower
+
+logo: https://github.com/ace411/dumbflower/blob/master/assets/icon.png
+
+search: true
+
+subTitle: A simple image manipulation library for PHP
+
+exclude:
+  - vendor
+  - src
+  - tests
+  - website
+
+branch: gh-pages
+
+github:
+  user: ace411
+  repo: dumbflower
+
+template: 
+  url: https://github.com/moqmar/mintlook-couscous
+
+baseUrl: https://ace411.github.com/dumbflower
