@@ -34,13 +34,9 @@ function getImagesInDir(string $dir) : IO
                     ImmArray::fromArray(scandir($dir)) : 
                     ImmArray::fromArray([]);
 
-                return $files->filter(
-                    function ($file) { 
-                        $check = compose('getimagesize', 'is_array');
-
-                        return is_file($file) && $check($file); 
-                    }
-                );
+                return $files
+                    ->map(function ($file) use ($dir) { return concat('/', $dir, $file); })
+                    ->filter(isImg);
             }
         );
 }
