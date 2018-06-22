@@ -13,7 +13,7 @@ function takeSnapshot() : Reader
                 ->map(
                     function (string $format) {
                         $snap = compose(
-                            constantFunction(imagegrabscreen()),
+                            function ($fnValid) { return $fnValid ? imagegrabscreen() : identity(false); },
                             function ($res) use ($format) {
                                 return is_resource($res) ? 
                                     identity([
@@ -25,7 +25,7 @@ function takeSnapshot() : Reader
                             }
                         );
 
-                        return PHP_OS == 'WINNT' ? $snap($format) : identity([]);
+                        return $snap(PHP_OS == 'WINNT');
                     }
                 );
         }
