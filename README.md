@@ -4,9 +4,7 @@
 
 # DumbFlower
 
-[![Build Status](https://travis-ci.org/ace411/dumbflower.svg?branch=master)](https://travis-ci.org/ace411/dumbflower)
-
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/86961fde07564ec388c4a93582f6ba7a)](https://www.codacy.com/app/ace411/dumbflower?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ace411/dumbflower&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/ace411/dumbflower.svg?branch=master)](https://travis-ci.org/ace411/dumbflower)[![Codacy Badge](https://api.codacy.com/project/badge/Grade/86961fde07564ec388c4a93582f6ba7a)](https://www.codacy.com/app/ace411/dumbflower?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ace411/dumbflower&amp;utm_campaign=Badge_Grade)
 
 
 A simple image manipulation library. 
