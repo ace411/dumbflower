@@ -81,16 +81,16 @@ class ConsoleTest extends TestCase
     {
         $srcFile = extractSrcFile(['def' => ['resize', '[12, 13]', '--s=file.png']]);
 
-        $this->assertTrue(is_array($newFile));
-        $this->assertArrayHasKey('src', $newFile);
+        $this->assertTrue(is_array($srcFile));
+        $this->assertArrayHasKey('src', $srcFile);
     }
 
     public function testExtractOutputFileMatchesOutputFileArgumentAndTheAccompanyingFile()
     {
         $outputFile = extractOutputFile(['def' => ['resize', '[12, 13]', '--o=file-smooth.png']]);
 
-        $this->assertTrue(is_array($newFile));
-        $this->assertArrayHasKey('out', $newFile);
+        $this->assertTrue(is_array($outputFile));
+        $this->assertArrayHasKey('out', $outputFile);
     }
     
     public function testProcessArgsOutputsArrayOfUsefulArguments()
