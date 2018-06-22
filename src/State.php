@@ -75,3 +75,7 @@ const CONSOLE_INTRO_CMD_DESC = '<command> The action to be performed eg. smoothe
 const CONSOLE_INTRO_ARG_DESC = '<args> The array of arguments for the command eg. color profiles [255, 0, 0] for red';
 
 const CONSOLE_INTRO_SRC_DESC = '<sourcefile> The file or directory on which to perform the operation eg. --s=file.png';
+
+const CONSOLE_EXCEPTION_TXT = 'Exception: {exMsg}';
+
+const CONSOLE_ERROR_TXT = 'Error code: {errCode}' . PHP_EOL . 'Error message: {errMsg}';
