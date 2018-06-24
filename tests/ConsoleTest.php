@@ -28,7 +28,7 @@ class ConsoleTest extends TestCase
     {
         $error = logError(99);
 
-        $this->assertTrue(is_array($error));
+        $this->assertInternalType('array', $error);
         $this->assertArrayHasKey('error', $error);
     }
 
@@ -36,7 +36,7 @@ class ConsoleTest extends TestCase
     {
         $cmd = extractCommand(['resize']);
 
-        $this->assertTrue(is_array($cmd));
+        $this->assertInternalType('array', $cmd);
         $this->assertArrayHasKey('cmd', $cmd);
     }
 
@@ -44,7 +44,7 @@ class ConsoleTest extends TestCase
     {
         $cmd = extractCommand(['foo']);
 
-        $this->assertTrue(is_array($cmd));
+        $this->assertInternalType('array', $cmd);
         $this->assertArrayHasKey('error', $cmd);
     }
 
@@ -52,7 +52,7 @@ class ConsoleTest extends TestCase
     {
         $args = extractFnArgs(['resize', '[12, 13]']);
 
-        $this->assertTrue(is_array($args));
+        $this->assertInternalType('array', $args);
         $this->assertArrayHasKey('args', $args);
     }
 
@@ -60,7 +60,7 @@ class ConsoleTest extends TestCase
     {
         $cmdArgs = getCmdArgs(['def' => ['resize', '[12, 13]']]);
 
-        $this->assertTrue(is_array($cmdArgs));
+        $this->assertInternalType('array', $cmdArgs);
         $this->assertEquals($cmdArgs, ['resize', '[12, 13]']);
     }
 
@@ -73,7 +73,7 @@ class ConsoleTest extends TestCase
             99
         );
 
-        $this->assertTrue(is_array($newFile));
+        $this->assertInternalType('array', $newFile);
         $this->assertArrayHasKey('new', $newFile);
     }
 
@@ -81,7 +81,7 @@ class ConsoleTest extends TestCase
     {
         $srcFile = extractSrcFile(['def' => ['resize', '[12, 13]', '--s=file.png']]);
 
-        $this->assertTrue(is_array($srcFile));
+        $this->assertInternalType('array', $srcFile);
         $this->assertArrayHasKey('src', $srcFile);
     }
 
@@ -89,7 +89,7 @@ class ConsoleTest extends TestCase
     {
         $outputFile = extractOutputFile(['def' => ['resize', '[12, 13]', '--o=file-smooth.png']]);
 
-        $this->assertTrue(is_array($outputFile));
+        $this->assertInternalType('array', $outputFile);
         $this->assertArrayHasKey('out', $outputFile);
     }
     
@@ -97,7 +97,7 @@ class ConsoleTest extends TestCase
     {
         $args = processArgs(['resize', '[12, 13]', '--s=file.png', '--o=file-smooth.png']);
 
-        $this->assertTrue(is_array($args));
+        $this->assertInternalType('array', $args);
         $this->assertTrue(arrayKeysExist($args, 'def', 'cmd', 'args', 'src', 'out'));
     }
 }
