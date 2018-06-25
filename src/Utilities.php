@@ -6,7 +6,10 @@ use \Qaribou\Collection\ImmArray;
 use \Chemem\Bingo\Functional\Functors\Monads\{IO, Reader};
 use function Chemem\Bingo\Functional\PatternMatching\{patternMatch};
 use function \Chemem\Bingo\Functional\Algorithms\{
-    concat, 
+    head,
+    tail,
+    concat,
+    extend, 
     compose,
     identity,
     foldRight, 
@@ -78,8 +81,7 @@ function renameImg(string $oldName, string $newName) : string
     $rename = compose(
         partialLeft('explode', '/'),
         \Chemem\Bingo\Functional\Algorithms\reverse,
-        \Chemem\Bingo\Functional\Algorithms\tail,
-        partialLeft('array_merge', [$newName]),
+        function ($file) use ($newName) { return is_dir($newName) ? extend([head($file)], [$newName]) : extend(tail($file), [$newName]); },
         \Chemem\Bingo\Functional\Algorithms\reverse,
         partialLeft('implode', '/')        
     );
