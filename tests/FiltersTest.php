@@ -3,7 +3,7 @@
 namespace Chemem\DumbFlower\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function \Chemem\Bingo\Functional\Algorithms\{compose, partialRight, arrayKeysExist};
+use function \Chemem\Bingo\Functional\Algorithms\{compose, partialLeft, partialRight, arrayKeysExist};
 use function \Chemem\DumbFlower\Filters\{createImg, applyFilter};
 
 class FiltersTest extends TestCase
@@ -109,6 +109,81 @@ class FiltersTest extends TestCase
                     ->run([])
                     ->exec()
             )
+        );
+    }
+
+    public function testFilterMultipleOutputsIOInstance()
+    {
+        $filter = compose(
+            partialLeft(\Chemem\DumbFlower\Utilities\resolvePath, 1),
+            \Chemem\DumbFlower\Utilities\getImagesInDir,
+            partialRight(\Chemem\DumbFlower\Filters\filterMultiple, 'smoothen')
+        );
+
+        $this->assertInstanceOf(
+            \Chemem\Bingo\Functional\Functors\Monads\IO::class,
+            $filter('src')
+        );
+    }
+
+    public function testFilterMultipleOutputsImmutableListWrappedInsideIOInstance()
+    {
+        $filter = compose(
+            partialLeft(\Chemem\DumbFlower\Utilities\resolvePath, 1),
+            \Chemem\DumbFlower\Utilities\getImagesInDir,
+            partialRight(\Chemem\DumbFlower\Filters\filterMultiple, 'smoothen')
+        );
+        
+        $this->assertInstanceOf(
+            \Qaribou\Collection\ImmArray::class,
+            $filter('src')->exec()
+        );
+    }
+
+    public function testExtractMultipleOutputsReaderInstance()
+    {
+        $extr = compose(
+            partialLeft(\Chemem\DumbFlower\Utilities\resolvePath, 1),
+            \Chemem\DumbFlower\Utilities\getImagesInDir,
+            partialRight(\Chemem\DumbFlower\Filters\filterMultiple, 'smoothen'),
+            partialRight(\Chemem\DumbFlower\Filters\extractMultiple, 'dir')
+        );
+
+        $this->assertInstanceOf(
+            \Chemem\Bingo\Functional\Functors\Monads\Reader::class,
+            $extr('src')
+        );
+    }
+
+    public function testExtractMultipleOutputsIOInstanceWrappedInsideReaderInstance()
+    {
+        $extr = compose(
+            partialLeft(\Chemem\DumbFlower\Utilities\resolvePath, 1),
+            \Chemem\DumbFlower\Utilities\getImagesInDir,
+            partialRight(\Chemem\DumbFlower\Filters\filterMultiple, 'smoothen'),
+            partialRight(\Chemem\DumbFlower\Filters\extractMultiple, dirname(__DIR__) . '/dir')
+        );
+
+        $this->assertInstanceOf(
+            \Chemem\Bingo\Functional\Functors\Monads\IO::class,
+            $extr('src')->run([100])
+        );
+    }
+
+    public function testExtractMultipleOutputsImmutableListWrappedInsideIOInstanceEncapsulatedInReaderInstance()
+    {
+        $extr = compose(
+            partialLeft(\Chemem\DumbFlower\Utilities\resolvePath, 1),
+            \Chemem\DumbFlower\Utilities\getImagesInDir,
+            partialRight(\Chemem\DumbFlower\Filters\filterMultiple, 'smoothen'),
+            partialRight(\Chemem\DumbFlower\Filters\extractMultiple, dirname(__DIR__) . '/dir')
+        );
+
+        $this->assertInstanceOf(
+            \Qaribou\Collection\ImmArray::class,
+            $extr('src')
+                ->run([100])
+                ->exec()
         );
     }
 }

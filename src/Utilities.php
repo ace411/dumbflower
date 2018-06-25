@@ -6,7 +6,10 @@ use \Qaribou\Collection\ImmArray;
 use \Chemem\Bingo\Functional\Functors\Monads\{IO, Reader};
 use function Chemem\Bingo\Functional\PatternMatching\{patternMatch};
 use function \Chemem\Bingo\Functional\Algorithms\{
-    concat, 
+    head,
+    tail,
+    concat,
+    extend, 
     compose,
     identity,
     foldRight, 
@@ -34,13 +37,9 @@ function getImagesInDir(string $dir) : IO
                     ImmArray::fromArray(scandir($dir)) : 
                     ImmArray::fromArray([]);
 
-                return $files->filter(
-                    function ($file) { 
-                        $check = compose('getimagesize', 'is_array');
-
-                        return is_file($file) && $check($file); 
-                    }
-                );
+                return $files
+                    ->map(function ($file) use ($dir) { return concat('/', $dir, $file); })
+                    ->filter(isImg);
             }
         );
 }
@@ -54,7 +53,7 @@ function manipDir(string $opt, string $dirname) : IO
             function (string $opt) use ($dirname) : bool {
                 $match = patternMatch(
                     [
-                        '"create"' => function () use ($dirname) { return mkdir($dirname); },
+                        '"create"' => function () use ($dirname) { return !file_exists($dirname) ? @mkdir($dirname) : identity(true); },
                         '"delete"' => function () use ($dirname) { return rmdir($dirname); },
                         '_' => function () { return false; }
                     ],
@@ -82,8 +81,7 @@ function renameImg(string $oldName, string $newName) : string
     $rename = compose(
         partialLeft('explode', '/'),
         \Chemem\Bingo\Functional\Algorithms\reverse,
-        \Chemem\Bingo\Functional\Algorithms\tail,
-        partialLeft('array_merge', [$newName]),
+        function ($file) use ($newName) { return is_dir($newName) ? extend([head($file)], [$newName]) : extend([$newName], tail($file)); },
         \Chemem\Bingo\Functional\Algorithms\reverse,
         partialLeft('implode', '/')        
     );
