@@ -81,7 +81,7 @@ function renameImg(string $oldName, string $newName) : string
     $rename = compose(
         partialLeft('explode', '/'),
         \Chemem\Bingo\Functional\Algorithms\reverse,
-        function ($file) use ($newName) { return is_dir($newName) ? extend([head($file)], [$newName]) : extend(tail($file), [$newName]); },
+        function ($file) use ($newName) { return is_dir($newName) ? extend([head($file)], [$newName]) : extend([$newName], tail($file)); },
         \Chemem\Bingo\Functional\Algorithms\reverse,
         partialLeft('implode', '/')        
     );
