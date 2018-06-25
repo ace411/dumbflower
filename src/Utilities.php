@@ -53,7 +53,7 @@ function manipDir(string $opt, string $dirname) : IO
             function (string $opt) use ($dirname) : bool {
                 $match = patternMatch(
                     [
-                        '"create"' => function () use ($dirname) { return mkdir($dirname); },
+                        '"create"' => function () use ($dirname) { return !file_exists($dirname) ? @mkdir($dirname) : identity(true); },
                         '"delete"' => function () use ($dirname) { return rmdir($dirname); },
                         '_' => function () { return false; }
                     ],
