@@ -2,10 +2,12 @@
 
 namespace Chemem\DumbFlower\Filters;
 
+use \Qaribou\Collection\ImmArray;
 use \Chemem\Bingo\Functional\Functors\Monads\{IO, Reader, State};
-use function Chemem\DumbFlower\Utilities\{isImg, renameImg, getImgExt};
+use function Chemem\DumbFlower\Utilities\{isImg, renameImg, manipDir, getImagesInDir, getImgExt};
 use function \Chemem\Bingo\Functional\Algorithms\{
     head, 
+    every,
     reverse, 
     compose, 
     extend,
@@ -108,6 +110,35 @@ function applyFilter(IO $image, string $type) : Reader
     );
 }
 
+const filterMultiple = 'Chemem\\DumbFlower\\Filters\\filterMultiple';
+
+function filterMultiple(IO $dirImg, string $type) : IO
+{
+    return $dirImg
+        ->map(function (ImmArray $files) { return $files->map(createImg); })
+        ->map(
+            function (ImmArray $files) {
+                $getFile = compose(
+                    partialLeft('explode', '/'),
+                    \Chemem\Bingo\Functional\Algorithms\reverse,
+                    \Chemem\Bingo\Functional\Algorithms\head
+                );
+
+                return $files->map(
+                    function ($file) use ($getFile) { 
+                        return $file
+                            ->map(function ($props) use ($getFile) { return extend($props, ['raw' => $getFile($props['file'])]); }); 
+                    }
+                );
+            }
+        )
+        ->map(
+            function (ImmArray $files) use ($type) { 
+                return $files->map(function ($file) use ($type) { return applyFilter($file, $type); }); 
+            }
+        ); 
+}
+
 const extractImg = 'Chemem\\DumbFlower\\Filters\\extractImg';
 
 function extractImg(Reader $resource, string $entity) : Reader
@@ -116,7 +147,7 @@ function extractImg(Reader $resource, string $entity) : Reader
         ->withReader(
             function (IO $resourceData) use ($entity) {
                 return Reader::of(
-                    function (array $opts) use ($entity,$resourceData) {
+                    function (array $opts) use ($entity, $resourceData) {
                         return $resourceData
                             ->map(
                                 function (array $imgOpts) use ($entity) {
@@ -134,4 +165,37 @@ function extractImg(Reader $resource, string $entity) : Reader
                 );
             }
         );
+}
+
+const extractMultiple = 'Chemem\\DumbFlower\\Filters\\extractMultiple';
+
+function extractMultiple(IO $resource, string $dir) : Reader
+{
+    return Reader::of(
+        function (array $opts) use ($resource, $dir) {
+            return $resource
+                ->map(
+                    function (ImmArray $mult) use ($opts, $dir) {
+                        $mkdir = is_dir($dir) ?
+                            identity($dir) : 
+                            manipDir('create', $dir)->flatMap(function ($created) use ($dir) { return $created ? $dir : identity(''); });
+                            
+                        return !empty($dir) ? 
+                            $mult
+                                ->map(function ($imgOpts) use ($opts) { return $imgOpts->run($opts); })
+                                ->map(
+                                    function ($imgOpts) use ($dir, $opts) {
+                                        $extract = partialLeft(
+                                            extractImg, 
+                                            Reader::of(function ($opts) use ($imgOpts) { return identity($imgOpts); })
+                                        );
+
+                                        return $extract($dir)->run([]);
+                                    }
+                                ) : 
+                            identity($mult);
+                    }
+                );
+        }
+    );
 }
