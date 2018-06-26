@@ -20,7 +20,7 @@ use function \Chemem\Bingo\Functional\Algorithms\{pluck, extend, partialRight, a
 
 class ConsoleTest extends TestCase
 {
-    protected const TEST_ARGS = [
+    protected $testArgs = [
         'cmd' => 'smoothen',
         'args' => \Chemem\DumbFlower\State\DEFAULT_SMOOTH_FILTER,
         'src' => 'foo/bar.png',
@@ -119,7 +119,7 @@ class ConsoleTest extends TestCase
         $filter = [
             \Chemem\DumbFlower\Filters\createImg,
             partialRight(\Chemem\DumbFlower\Filters\applyFilter, 'smoothen'),
-            partialRight(\Chemem\DumbFlower\Filters\extractImg, pluck(self::TEST_ARGS, 'out'))
+            partialRight(\Chemem\DumbFlower\Filters\extractImg, pluck($this->testArgs, 'out'))
         ];
 
         $this->assertInternalType('array', $filter);
@@ -127,7 +127,7 @@ class ConsoleTest extends TestCase
 
     public function testExecFuncPerformsActionBasedOnCommandType()
     {
-        $args = execFunc(self::TEST_ARGS);
+        $args = execFunc($this->testArgs);
 
         $this->assertInternalType('array', $args);
         $this->assertContains(\Chemem\DumbFlower\State\CONSOLE_RESULT_MSG, $args);
@@ -136,7 +136,7 @@ class ConsoleTest extends TestCase
 
     public function testExecFuncOutputsErrorMessageEncapsulatedInArrayForInvalidCommands()
     {
-        $args = execFunc(extend(self::TEST_ARGS, ['cmd' => 'foo']));
+        $args = execFunc(extend($this->testArgs, ['cmd' => 'foo']));
 
         $this->assertContains(\Chemem\DumbFlower\State\CONSOLE_ERROR_MSG, $args);
     }
