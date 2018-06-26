@@ -13,15 +13,27 @@ use function \Chemem\DumbFlower\Console\{
     extractFileDef,
     extractSrcFile,
     extractOutputFile,
-    logError
+    logError,
+    execFunc
 };
-use function \Chemem\Bingo\Functional\Algorithms\arrayKeysExist;
+use function \Chemem\Bingo\Functional\Algorithms\{pluck, extend, partialRight, arrayKeysExist};
 
 class ConsoleTest extends TestCase
 {
+    protected const TEST_ARGS = [
+        'cmd' => 'smoothen',
+        'args' => \Chemem\DumbFlower\State\DEFAULT_SMOOTH_FILTER,
+        'src' => 'foo/bar.png',
+        'out' => 'baz.png'
+    ];
+
     public function testLogErrorOutputsIntegerCodeSpecificErrorMessage()
     {
-        $this->assertEquals(logError(1), ['error' => 'Invalid command']);
+        $this->assertEquals(logError(1), ['cmd_error' => 'Invalid command']);
+        $this->assertEquals(logError(2), ['src_error' => 'Invalid src file']);
+        $this->assertEquals(logError(3), ['out_error' => 'Invalid output file']);
+        $this->assertEquals(logError(4), ['func_error' => 'Missing function arguments']);
+        $this->assertEquals(logError(99), ['gen_error' => 'Unidentified error']);
     }
 
     public function testLogErrorOutputsErrorAsArray()
@@ -29,7 +41,7 @@ class ConsoleTest extends TestCase
         $error = logError(99);
 
         $this->assertTrue(is_array($error));
-        $this->assertArrayHasKey('error', $error);
+        $this->assertArrayHasKey('gen_error', $error);
     }
 
     public function testExtractCommandOutputsArrayWithCommand()
@@ -44,8 +56,8 @@ class ConsoleTest extends TestCase
     {
         $cmd = extractCommand(['foo']);
 
-        $this->assertTrue(is_array($cmd));
-        $this->assertArrayHasKey('error', $cmd);
+        $this->assertInternalType('array', $cmd);
+        $this->assertArrayHasKey('cmd_error', $cmd);
     }
 
     public function testExtractFnArgsOutputsArrayWithArgs()
@@ -93,11 +105,39 @@ class ConsoleTest extends TestCase
         $this->assertArrayHasKey('out', $outputFile);
     }
     
-    public function testProcessArgsOutputsArrayOfUsefulArguments()
+    public function testProcessArgsOutputsArrayWithOperationStatusContents()
     {
-        $args = processArgs(['resize', '[12, 13]', '--s=file.png', '--o=file-smooth.png']);
+        $args = processArgs(['resize', '[12,13]', '--s=file.png', '--o=file-smooth.png']);
 
-        $this->assertTrue(is_array($args));
-        $this->assertTrue(arrayKeysExist($args, 'def', 'cmd', 'args', 'src', 'out'));
+        $this->assertInternalType('array', $args);
+        $this->assertContains(\Chemem\DumbFlower\State\CONSOLE_RESULT_MSG, $args);
+        $this->assertContains('Failure', $args);
+    }
+
+    public function testActionFunctionOutputsArray()
+    {
+        $filter = [
+            \Chemem\DumbFlower\Filters\createImg,
+            partialRight(\Chemem\DumbFlower\Filters\applyFilter, 'smoothen'),
+            partialRight(\Chemem\DumbFlower\Filters\extractImg, pluck(self::TEST_ARGS, 'out'))
+        ];
+
+        $this->assertInternalType('array', $filter);
+    }
+
+    public function testExecFuncPerformsActionBasedOnCommandType()
+    {
+        $args = execFunc(self::TEST_ARGS);
+
+        $this->assertInternalType('array', $args);
+        $this->assertContains(\Chemem\DumbFlower\State\CONSOLE_RESULT_MSG, $args);
+        $this->assertContains('Failure', $args);
+    }
+
+    public function testExecFuncOutputsErrorMessageEncapsulatedInArrayForInvalidCommands()
+    {
+        $args = execFunc(extend(self::TEST_ARGS, ['cmd' => 'foo']));
+
+        $this->assertContains(\Chemem\DumbFlower\State\CONSOLE_ERROR_MSG, $args);
     }
 }
