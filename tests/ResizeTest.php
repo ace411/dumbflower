@@ -3,7 +3,7 @@
 namespace Chemem\DumbFlower\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function \Chemem\Bingo\Functional\Algorithms\compose;
+use function \Chemem\Bingo\Functional\Algorithms\{compose, partialLeft};
 use function \Chemem\DumbFlower\Resize\{computeAspectRatio, resizeImg};
 
 class ResizeTest extends TestCase
@@ -69,5 +69,33 @@ class ResizeTest extends TestCase
         $resize = $func('img/file.png')->run([100, 100])->exec();
 
         $this->assertTrue(is_array($resize));
+    }
+
+    public function testResizeMultipleOutputsIOInstance()
+    {
+        $files = compose(
+            partialLeft(\Chemem\DumbFlower\Utilities\resolvePath, 1),
+            \Chemem\DumbFlower\Utilities\getImagesInDir,
+            \Chemem\DumbFlower\Resize\resizeMultiple
+        );
+
+        $this->assertInstanceOf(
+            \Chemem\Bingo\Functional\Functors\Monads\IO::class,
+            $files('src')
+        );
+    }
+
+    public function testResizeMultipleOutputsImmutableListWrappedInsideIOInstance()
+    {
+        $files = compose(
+            partialLeft(\Chemem\DumbFlower\Utilities\resolvePath, 1),
+            \Chemem\DumbFlower\Utilities\getImagesInDir,
+            \Chemem\DumbFlower\Resize\resizeMultiple
+        );
+
+        $this->assertInstanceOf(
+            \Qaribou\Collection\ImmArray::class,
+            $files('src')->exec()
+        );
     }
 }
