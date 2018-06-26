@@ -16,6 +16,8 @@ use function \Chemem\Bingo\Functional\Algorithms\{
     constantFunction
 };
 
+const computeAspectRatio = 'Chemem\\DumbFlower\\Resize\\computeAspectRatio';
+
 function computeAspectRatio(string $image) : IO
 {
     return IO::of(constantFunction($image))
@@ -35,6 +37,8 @@ function computeAspectRatio(string $image) : IO
             }
         ); 
 }
+
+const resizeImg = 'Chemem\\DumbFlower\\Resize\\resizeImg';
 
 function resizeImg(IO $aspectRatio) : Reader
 {
