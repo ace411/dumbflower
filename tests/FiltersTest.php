@@ -22,7 +22,7 @@ class FiltersTest extends TestCase
     {
         $createImg = createImg('foo/bar')->exec();
 
-        $this->assertTrue(is_array($createImg));
+        $this->assertInternalType('array', $createImg);
         $this->assertTrue(arrayKeysExist($createImg, 'ext', 'file', 'resource'));
     }
 
@@ -60,7 +60,7 @@ class FiltersTest extends TestCase
         );
 
         $this->assertArrayHasKey(
-            'filtered', 
+            'filtered',
             $filter('foo/bar.png')
                 ->run([])
                 ->exec()
@@ -103,12 +103,10 @@ class FiltersTest extends TestCase
             partialRight(\Chemem\DumbFlower\FIlters\extractImg, 'file-smooth.png')
         );
 
-        $this->assertTrue(
-            is_bool(
-                $extract('foo/bar.png')
-                    ->run([])
-                    ->exec()
-            )
+        $this->assertInternalType('boolean',
+            $extract('foo/bar.png')
+                ->run([])
+                ->exec()
         );
     }
 
@@ -133,7 +131,7 @@ class FiltersTest extends TestCase
             \Chemem\DumbFlower\Utilities\getImagesInDir,
             partialRight(\Chemem\DumbFlower\Filters\filterMultiple, 'smoothen')
         );
-        
+
         $this->assertInstanceOf(
             \Qaribou\Collection\ImmArray::class,
             $filter('src')->exec()

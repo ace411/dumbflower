@@ -6,10 +6,10 @@ use \PHPUnit\Framework\TestCase;
 use function \Chemem\Bingo\Functional\Algorithms\{compose, partialLeft};
 use function \Chemem\DumbFlower\Utilities\{
     isImg,
-    manipDir, 
-    renameImg, 
+    manipDir,
+    renameImg,
     resolvePath,
-    getImgExt, 
+    getImgExt,
     getImagesInDir
 };
 
@@ -19,7 +19,7 @@ class UtilitiesTest extends TestCase
     {
         $path = resolvePath(1, 'foo', 'bar');
 
-        $this->assertTrue(is_string($path));
+        $this->assertInternalType('string', $path);
     }
 
     public function testResolvePathOutputsPathConcatenatedOntoSpecifiedBaseDirectory()
@@ -80,7 +80,7 @@ class UtilitiesTest extends TestCase
     public function testIsImgDeterminesIfFileIsAnImage()
     {
         $isImg = isImg(dirname(__DIR__) . '/composer.json');
-        
+
         $this->assertFalse($isImg);
     }
 
