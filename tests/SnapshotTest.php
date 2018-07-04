@@ -30,6 +30,6 @@ class SnapshotTest extends TestCase
             ->run('png')
             ->exec();
 
-        $this->assertTrue(is_array($snapshot)); 
+        $this->assertInternalType('array', $snapshot);
     }
 }

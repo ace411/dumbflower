@@ -4,11 +4,11 @@ namespace Chemem\DumbFlower\Tests;
 
 use PHPUnit\Framework\TestCase;
 use function \Chemem\DumbFlower\Console\{
-    console, 
-    runConsole, 
-    extractCommand, 
-    processArgs, 
-    extractFnArgs, 
+    console,
+    runConsole,
+    extractCommand,
+    processArgs,
+    extractFnArgs,
     getCmdArgs,
     extractFileDef,
     extractSrcFile,
@@ -27,20 +27,30 @@ class ConsoleTest extends TestCase
         'out' => 'baz.png'
     ];
 
-    public function testLogErrorOutputsIntegerCodeSpecificErrorMessage()
+    public function logErrorOutputsIntegerDataProvider()
     {
-        $this->assertEquals(logError(1), ['cmd_error' => 'Invalid command']);
-        $this->assertEquals(logError(2), ['src_error' => 'Invalid src file']);
-        $this->assertEquals(logError(3), ['out_error' => 'Invalid output file']);
-        $this->assertEquals(logError(4), ['func_error' => 'Missing function arguments']);
-        $this->assertEquals(logError(99), ['gen_error' => 'Unidentified error']);
+        return [
+            [1, ['cmd_error' => 'Invalid command']],
+            [2, ['src_error' => 'Invalid src file']],
+            [3, ['out_error' => 'Invalid output file']],
+            [4, ['func_error' => 'Missing function arguments']],
+            [99, ['gen_error' => 'Unidentified error']],
+        ];
+    }
+
+    /**
+     * @dataProvider logErrorOutputsIntegerDataProvider
+     */
+    public function testLogErrorOutputsIntegerCodeSpecificErrorMessage($errorInteger, $expectedArray)
+    {
+        $this->assertEquals($expectedArray, logError($errorInteger));
     }
 
     public function testLogErrorOutputsErrorAsArray()
     {
         $error = logError(99);
 
-        $this->assertTrue(is_array($error));
+        $this->assertInternalType('array', $error);
         $this->assertArrayHasKey('gen_error', $error);
     }
 
@@ -79,7 +89,7 @@ class ConsoleTest extends TestCase
     public function testExtractFileDefOutputsFileFlagAndItsAccompanyingArgument()
     {
         $newFile = extractFileDef(
-            ['def' => ['resize', '[12, 13]', '--n=file.png']], 
+            ['def' => ['resize', '[12, 13]', '--n=file.png']],
             '/(--)(n{1})(=*)([a-z\.\-\_\0-9\ ]*)/',
             'new',
             99
@@ -104,7 +114,7 @@ class ConsoleTest extends TestCase
         $this->assertInternalType('array', $outputFile);
         $this->assertArrayHasKey('out', $outputFile);
     }
-    
+
     public function testProcessArgsOutputsArrayWithOperationStatusContents()
     {
         $args = processArgs(['resize', '[12,13]', '--s=file.png', '--o=file-smooth.png']);

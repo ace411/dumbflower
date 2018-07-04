@@ -20,9 +20,9 @@ class ResizeTest extends TestCase
     {
         $specs = computeAspectRatio('img/file.png')->exec();
 
-        $this->assertTrue(is_array($specs));
+        $this->assertInternalType('array', $specs);
         $this->assertEquals(
-            $specs, 
+            $specs,
             [
                 'ratio' => 0,
                 'width' => 0,
@@ -68,7 +68,7 @@ class ResizeTest extends TestCase
 
         $resize = $func('img/file.png')->run([100, 100])->exec();
 
-        $this->assertTrue(is_array($resize));
+        $this->assertInternalType('array', $resize);
     }
 
     public function testResizeMultipleOutputsIOInstance()
