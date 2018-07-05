@@ -31,7 +31,8 @@
         "qaribou/immutable.php": "~1",
         "chemem/bingo-functional": "~1",
         "yosymfony/resource-watcher": "~2",
-        "react/event-loop": "~0"
+        "react/event-loop": "~0",
+        "jakub-onderka/php-console-color": "0.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~6"
