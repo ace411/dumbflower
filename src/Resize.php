@@ -2,6 +2,7 @@
 
 namespace Chemem\DumbFlower\Resize;
 
+use \Qaribou\Collection\ImmArray;
 use \Chemem\Bingo\Functional\Functors\Monads\{IO, Reader};
 use function Chemem\DumbFlower\Utilities\{isImg, getImgExt};
 use function Chemem\Bingo\Functional\PatternMatching\patternMatch;

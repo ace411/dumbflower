@@ -91,6 +91,14 @@ class UtilitiesTest extends TestCase
         $this->assertEquals($rename, 'foo/baz.png');
     }
 
+    public function testRenameImgConcatenatesDirectoryAndFileNamesWhenDirectoryIsDetected()
+    {
+        $this->assertEquals(
+            renameImg('bar.png', dirname(__DIR__) . '/vendor'),
+            dirname(__DIR__) . '/vendor/bar.png'
+        );
+    }
+
     public function testGetImgExtOutputsFileExtension()
     {
         $ext = getImgExt(dirname(__DIR__) . '/composer.json');

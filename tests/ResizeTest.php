@@ -3,7 +3,7 @@
 namespace Chemem\DumbFlower\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function \Chemem\Bingo\Functional\Algorithms\compose;
+use function \Chemem\Bingo\Functional\Algorithms\{compose, partialLeft};
 use function \Chemem\DumbFlower\Resize\{computeAspectRatio, resizeImg};
 
 class ResizeTest extends TestCase

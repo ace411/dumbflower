@@ -2,10 +2,12 @@
 
 namespace Chemem\DumbFlower\Filters;
 
+use \Qaribou\Collection\ImmArray;
 use \Chemem\Bingo\Functional\Functors\Monads\{IO, Reader, State};
-use function Chemem\DumbFlower\Utilities\{isImg, renameImg, getImgExt};
+use function Chemem\DumbFlower\Utilities\{isImg, renameImg, manipDir, getImagesInDir, getImgExt};
 use function \Chemem\Bingo\Functional\Algorithms\{
     head, 
+    every,
     reverse, 
     compose, 
     extend,
@@ -116,7 +118,7 @@ function extractImg(Reader $resource, string $entity) : Reader
         ->withReader(
             function (IO $resourceData) use ($entity) {
                 return Reader::of(
-                    function (array $opts) use ($entity,$resourceData) {
+                    function (array $opts) use ($entity, $resourceData) {
                         return $resourceData
                             ->map(
                                 function (array $imgOpts) use ($entity) {
