@@ -42,6 +42,7 @@
         },
         "files": [
             "src/State.php",
+            "src/Colors.php",
             "src/Resize.php",
             "src/Console.php",
             "src/Filters.php",
