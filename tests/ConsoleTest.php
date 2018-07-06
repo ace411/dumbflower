@@ -14,7 +14,8 @@ use function \Chemem\DumbFlower\Console\{
     extractSrcFile,
     extractOutputFile,
     logError,
-    execFunc
+    execFunc,
+    extractDir
 };
 use function \Chemem\Bingo\Functional\Algorithms\{pluck, extend, partialRight, arrayKeysExist};
 
@@ -115,6 +116,14 @@ class ConsoleTest extends TestCase
         $this->assertArrayHasKey('out', $outputFile);
     }
 
+    public function testExtractDirMatchesSourceDirectoryArgumentAndTheAccompanyingDirectory()
+    {
+        $extractDir = extractDir(['def' => ['watch', '--dir=src']]);
+
+        $this->assertInternalType('array', $extractDir);
+        $this->assertArrayHasKey('dir', $extractDir);
+    }
+    
     public function testProcessArgsOutputsArrayWithOperationStatusContents()
     {
         $args = processArgs(['resize', '[12,13]', '--s=file.png', '--o=file-smooth.png']);

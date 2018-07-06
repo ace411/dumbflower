@@ -61,6 +61,11 @@ const CONSOLE_COMMANDS = [
         'type' => 'help',
         'hasDefault' => false,
         'default' => null
+    ],
+    'watch' => [
+        'type' => 'watch',
+        'hasDefault' => false,
+        'default' => null
     ]
 ];
 

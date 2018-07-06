@@ -39,15 +39,6 @@ function computeAspectRatio(string $image) : IO
         ); 
 }
 
-const resizeMultiple = 'Chemem\\DumbFlower\\Resize\\resizeMultiple';
-
-function resizeMultiple(IO $dir) : IO
-{
-    return $dir
-        ->map(function (ImmArray $files) { return $files->map(computeAspectRatio); })
-        ->map(function (ImmArray $files) { return $files->map(resizeImg); });
-}
-
 const resizeImg = 'Chemem\\DumbFlower\\Resize\\resizeImg';
 
 function resizeImg(IO $aspectRatio) : Reader

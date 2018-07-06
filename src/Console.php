@@ -75,6 +75,7 @@ function processArgs(array $args)
         extractFnArgs,
         extractSrcFile,
         extractOutputFile,
+        extractDir,
         execFunc
     );
 
@@ -172,6 +173,18 @@ function extractOutputFile(array $args)
     );
 }
 
+const extractDir = 'Chemem\\DumbFlower\\Console\\extractDir';
+
+function extractDir(array $args)
+{
+    return extractFileDef(
+        $args,
+        '/(--)(dir)(=*)([a-z\.\-\_\0-9\ ]*)/',
+        'dir',
+        5
+    );
+}
+
 const action = 'Chemem\\DumbFlower\\Console\\action';
 
 function action(array $args, array $funcs)
@@ -191,6 +204,17 @@ function action(array $args, array $funcs)
     );
 
     return $filter($args);
+}
+
+function watchDir(array $args, array $acc = [])
+{
+    $watch = compose(
+        \Chemem\DumbFlower\Watcher\finderInit,
+        \Chemem\DumbFlower\Watcher\watcherInit,
+        \Chemem\DumbFlower\Watcher\asyncWatch
+    );
+
+    return $watch(null)->run(pluck($args, 'dir'));
 }
 
 const execFunc = 'Chemem\\DumbFlower\\Console\\execFunc';
@@ -213,6 +237,7 @@ function execFunc(array $args)
 
     return patternMatch(
         [
+            '"watch"' => function () use ($args) { return watchDir($args); },
             '"resize"' => function () use ($args, $resize) { return action($args, $resize); },
             '"blur"' => function () use ($args, $filter) { return action($args, $filter('blur')); },
             '"emboss"' => function () use ($args, $filter) { return action($args, $filter('emboss')); },
@@ -272,6 +297,7 @@ function logError(int $type)
             '"2"' => function () { return ['src_error' => 'Invalid src file']; },
             '"3"' => function () { return ['out_error' => 'Invalid output file']; },
             '"4"' => function () { return ['func_error' => 'Missing function arguments']; },
+            '"5"' => function () { return ['dir_error' => 'Invalid directory']; },
             '_' => function () { return ['gen_error' => 'Unidentified error']; }
         ],
         $type

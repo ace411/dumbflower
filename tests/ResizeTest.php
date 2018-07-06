@@ -70,6 +70,7 @@ class ResizeTest extends TestCase
 
         $this->assertInternalType('array', $resize);
     }
+<<<<<<< HEAD
 
     public function testResizeMultipleOutputsIOInstance()
     {
@@ -99,3 +100,6 @@ class ResizeTest extends TestCase
         );
     }
 }
+=======
+}
+>>>>>>> features
