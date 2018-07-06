@@ -111,18 +111,4 @@ class FiltersTest extends TestCase
             )
         );
     }
-
-    public function testFilterMultipleOutputsIOInstance()
-    {
-        $filter = compose(
-            partialLeft(\Chemem\DumbFlower\Utilities\resolvePath, 1),
-            \Chemem\DumbFlower\Utilities\getImagesInDir,
-            partialRight(\Chemem\DumbFlower\Filters\filterMultiple, 'smoothen')
-        );
-
-        $this->assertInstanceOf(
-            \Chemem\Bingo\Functional\Functors\Monads\IO::class,
-            $filter('src')
-        );
-    }
 }
