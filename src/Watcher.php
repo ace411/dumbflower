@@ -2,11 +2,12 @@
 
 namespace Chemem\DumbFlower\Watcher;
 
+use Chemem\DumbFlower\State;
 use \Chemem\Bingo\Functional\Functors\Monads\{IO, Reader};
 use \Symfony\Component\Finder\Finder;
 use \Yosymfony\ResourceWatcher\{ResourceWatcher, ResourceCacheMemory, Crc32ContentHash};
 use function \Chemem\DumbFlower\Colors\{applyColor, genColor};
-use function \Chemem\Bingo\Functional\Algorithms\{concat, identity, constantFunction};
+use function \Chemem\Bingo\Functional\Algorithms\{concat, compose, identity, partialLeft, partialRight, constantFunction};
 
 const finderInit = 'Chemem\\DumbFlower\\Watcher\\finderInit';
 
@@ -42,25 +43,29 @@ function watcherInit(Reader $finderInit) : Reader
 
 const asyncWatch = 'Chemem\\DumbFlower\\Watcher\\asyncWatch';
 
-function asyncWatch(Reader $finderInit) : Reader
+function asyncWatch(Reader $finderInit, string $effect, array $args = []) : Reader
 {
     $loop = \React\EventLoop\Factory::create();
 
     return $finderInit
         ->withReader(
-            function (IO $fileSys) use ($loop) {
+            function (IO $fileSys) use ($args, $loop, $effect) {
                 return Reader::of(
-                    function (string $dir) use ($fileSys, $loop) {
+                    function (string $dir) use ($args, $loop, $fileSys, $effect) {
                         $acc = [];
                         $loop->addPeriodicTimer(
                             1/2,
-                            function () use ($fileSys, $acc) {
+                            function () use ($acc, $args, $fileSys, $effect) {
+                                $applyFilter = partialLeft(
+                                    'array_map', 
+                                    partialRight(watcherFilter, $args, $effect)
+                                );
                                 $watcher = $fileSys->map(function ($fileSys) { return $fileSys->findChanges(); })->exec();
                                 echo $watcher->hasChanges() ?
                                     concat(
                                         PHP_EOL, 
                                         applyColor('New: ', genColor(1)), 
-                                        implode(', ', $watcher->getNewFiles()),
+                                        implode(', ', $applyFilter($watcher->getNewFiles())),
                                         applyColor('Updated: ', genColor(2)), 
                                         implode(', ', $watcher->getUpdatedFiles()),
                                         applyColor('Deleted: ', genColor(4)), 
@@ -77,4 +82,19 @@ function asyncWatch(Reader $finderInit) : Reader
                 );
             }
         );
+}
+
+const watcherFilter = 'Chemem\\DumbFlower\\Watcher\\watcherFilter';
+
+function watcherFilter(string $file, string $action, array $params = []) : string
+{
+    $filter = compose(
+        \Chemem\DumbFlower\Filters\createImg,
+        partialRight(\Chemem\DumbFlower\Filters\applyFilter, $action),
+        partialRight(\Chemem\DumbFlower\Filters\extractImg, $file)
+    );
+
+    return $filter($file)
+        ->run($params)
+        ->flatMap(function ($success) use ($file, $action) { return $success ? concat(' ', $action, $file) : concat(' ', $file); });
 }
