@@ -3,7 +3,7 @@
 namespace Chemem\DumbFlower\Tests;
 
 use function Chemem\DumbFlower\Utilities\resolvePath;
-use function Chemem\DumbFlower\Watcher\{finderInit, watcherInit};
+use function Chemem\DumbFlower\Watcher\{finderInit, watcherInit, watcherFilter};
 
 class WatcherTest extends \PHPUnit\Framework\TestCase
 {
@@ -52,5 +52,12 @@ class WatcherTest extends \PHPUnit\Framework\TestCase
             \Yosymfony\ResourceWatcher\ResourceWatcher::class,
             $watcher
         );
+    }
+
+    public function testWatcherFilterOutputsString()
+    {
+        $watcher = watcherFilter(resolvePath(1, 'composer.json'), 'smoothen');
+
+        $this->assertInternalType('string', $watcher);
     }
 }
