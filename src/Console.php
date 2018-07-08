@@ -76,6 +76,7 @@ function processArgs(array $args)
         extractSrcFile,
         extractOutputFile,
         extractDir,
+        extractAuxCmd,
         execFunc
     );
 
@@ -185,6 +186,18 @@ function extractDir(array $args)
     );
 }
 
+const extractAuxCmd = 'Chemem\\DumbFlower\\Console\\extractAuxCmd';
+
+function extractAuxCmd(array $args)
+{
+    return extractFileDef(
+        $args,
+        '/(--)(acmd)(=*)([a-zA-Z])/',
+        'aux',
+        5
+    );
+}
+
 const action = 'Chemem\\DumbFlower\\Console\\action';
 
 function action(array $args, array $funcs)
@@ -206,15 +219,27 @@ function action(array $args, array $funcs)
     return $filter($args);
 }
 
-function watchDir(array $args, array $acc = [])
+const watchDir = 'Chemem\\DumbFlower\\Console\\watchDir';
+
+function watchDir(array $args)
 {
     $watch = compose(
-        \Chemem\DumbFlower\Watcher\finderInit,
-        \Chemem\DumbFlower\Watcher\watcherInit,
-        \Chemem\DumbFlower\Watcher\asyncWatch
+        partialRight(\Chemem\Bingo\Functional\Algorithms\arrayKeysExist, 'aux', 'args', 'dir'),
+        function ($res) use ($args) { return $res ? identity($args) : logError(4); },
+        function ($args) {
+            $watcher = !isset($args['func_error']) ? 
+                compose(
+                    \Chemem\DumbFlower\Watcher\finderInit,
+                    \Chemem\DumbFlower\Watcher\watcherInit,
+                    partialRight(\Chemem\DumbFlower\Watcher\asyncWatch, $args['args'], $args['aux'])
+                ) :
+                function () use ($args) { return Reader::of(function ($val) use ($args) { return is_bool($val) ? identity($args) : logError(5); }); };
+
+            return $watcher(null)->run(pluck($args, 'dir'));
+        }
     );
 
-    return $watch(null)->run(pluck($args, 'dir'));
+    return $watch($args);
 }
 
 const execFunc = 'Chemem\\DumbFlower\\Console\\execFunc';
@@ -298,6 +323,7 @@ function logError(int $type)
             '"3"' => function () { return ['out_error' => 'Invalid output file']; },
             '"4"' => function () { return ['func_error' => 'Missing function arguments']; },
             '"5"' => function () { return ['dir_error' => 'Invalid directory']; },
+            '"6"' => function () { return ['aux_error' => 'Auxiliary command undefined']; },
             '_' => function () { return ['gen_error' => 'Unidentified error']; }
         ],
         $type

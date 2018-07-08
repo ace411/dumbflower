@@ -15,7 +15,9 @@ use function \Chemem\DumbFlower\Console\{
     extractOutputFile,
     logError,
     execFunc,
-    extractDir
+    extractDir,
+    watchDir,
+    extractAuxCmd
 };
 use function \Chemem\Bingo\Functional\Algorithms\{pluck, extend, partialRight, arrayKeysExist};
 
@@ -123,6 +125,14 @@ class ConsoleTest extends TestCase
         $this->assertInternalType('array', $extractDir);
         $this->assertArrayHasKey('dir', $extractDir);
     }
+
+    public function testExtractAuxCmdAddsAuxiliaryCommandToArgumentList()
+    {
+        $aux = extractAuxCmd(['def' => ['watch', '--acmd=grayscale']]);
+
+        $this->assertInternalType('array', $aux);
+        $this->assertArrayHasKey('aux', $aux);
+    }
     
     public function testProcessArgsOutputsArrayWithOperationStatusContents()
     {
@@ -158,5 +168,10 @@ class ConsoleTest extends TestCase
         $args = execFunc(extend($this->testArgs, ['cmd' => 'foo']));
 
         $this->assertContains(\Chemem\DumbFlower\State\CONSOLE_ERROR_MSG, $args);
+    }
+
+    public function testWatchDirOutputsErrorUponDetectionOfMissingArguments()
+    {
+        $this->assertArrayHasKey("func_error", watchDir($this->testArgs));
     }
 }
