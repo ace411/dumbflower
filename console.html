@@ -1,0 +1,234 @@
+<!doctype html>
+
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+
+  <title>dumbflower console</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="ace411">
+
+  <link rel="stylesheet" href="https://ace411.github.com/dumbflower/css/normalize.css">
+  <link rel="stylesheet" href="https://ace411.github.com/dumbflower/css/milligram.min.css">
+  <link rel="stylesheet" href="https://ace411.github.com/dumbflower/css/ovac-couscous.css">
+  <link rel="stylesheet" href="https://ace411.github.com/dumbflower/css/emojifyBase.min.css">
+  <link rel="stylesheet" href="https://ace411.github.com/dumbflower/css/emojify.min.css">
+  <link rel="stylesheet" href="https://ace411.github.com/dumbflower/css/emojify-emoticons.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TWFSSDL"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <nav id="menu" class="panel" role="navigation">
+        <h5>Table of Contents</h5>
+                <ul>
+                            <p class="text-muted">
+                    Installation
+                </p>
+
+                <ul class="nav nav-pills nav-stacked">
+                                            <li class="">
+                            <a href="https://ace411.github.com/dumbflower/index.html">
+                                Installation
+                            </a>
+                        </li>
+                                    </ul>
+                            <p class="text-muted">
+                    Usage
+                </p>
+
+                <ul class="nav nav-pills nav-stacked">
+                                            <li class="">
+                            <a href="https://ace411.github.com/dumbflower/console.html">
+                                Console
+                            </a>
+                        </li>
+                                            <li class="">
+                            <a href="https://ace411.github.com/dumbflower/uploads.html">
+                                Uploads
+                            </a>
+                        </li>
+                                    </ul>
+            
+                    </ul>
+            </nav>
+    <div class="push">
+        <header>
+            <a href="#menu" class="menu-link">&#9776;</a>
+            <h1>dumbflower console</h1>
+            <a class="github" href="http://github.com/ace411/dumbflower" title="dumbflower console sur Github" target="blank">
+                <svg width="80" height="80" viewBox="0 0 250 250" class="github">
+                    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+                    <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+                    <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+                </svg>
+            </a>
+        </header>
+        <div class="container">
+                            <p>The dumbflower console enables one to apply filters to and resize images on the fly - in an ad-hoc fashion. Depending on a user's preference, said actions are applicable on a single file or multiple new files in a directory. The standard format of the console is as follows:</p>
+<pre><code>vendor/bin/dumbflower &lt;command&gt; &lt;args&gt; --src=&lt;file&gt; --out=&lt;file&gt;</code></pre>
+<h2 id="commands">Commands</h2>
+<p>The command argument is the quintessential console requirement. Without it, no processing can occur. Commands in the dumbflower console correspond to library-supported actions. Actions are either GD-supported image filters or resize operations. Below is a table whose gist is a classification of library actions:</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>grayscale</td>
+<td>GD-filter</td>
+</tr>
+<tr>
+<td>smoothen</td>
+<td>GD-filter</td>
+</tr>
+<tr>
+<td>gaussian</td>
+<td>GD-filter</td>
+</tr>
+<tr>
+<td>colorize</td>
+<td>GD-filter</td>
+</tr>
+<tr>
+<td>brightness</td>
+<td>GD-filter</td>
+</tr>
+<tr>
+<td>emboss</td>
+<td>GD-filter</td>
+</tr>
+<tr>
+<td>blur</td>
+<td>GD-filter</td>
+</tr>
+<tr>
+<td>negate</td>
+<td>GD-filter</td>
+</tr>
+<tr>
+<td>contrast</td>
+<td>GD-filter</td>
+</tr>
+<tr>
+<td>resize</td>
+<td>GD-imagecopyresampled</td>
+</tr>
+</tbody>
+</table>
+<h2 id="args">Args</h2>
+<p>The command parameters, args for short, are the filter or resize constraints for an image. As far as the console is concerned, these parameters appear as an array without any spaces between elements. Information on the number of arguments per filter is available on the <a href="http://php.net/manual/en/function.imagefilter.php">PHP website</a> however, the table below suffices as a representation of said mapping.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Number of Arguments</th>
+<th>Specifics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>grayscale</td>
+<td>0</td>
+<td>-</td>
+</tr>
+<tr>
+<td>smoothen</td>
+<td>1</td>
+<td>Any float</td>
+</tr>
+<tr>
+<td>gaussian</td>
+<td>0</td>
+<td>-</td>
+</tr>
+<tr>
+<td>colorize</td>
+<td>3</td>
+<td><code>-255</code> - <code>255</code> for RGB</td>
+</tr>
+<tr>
+<td>brightness</td>
+<td>1</td>
+<td><code>-255</code> - <code>255</code></td>
+</tr>
+<tr>
+<td>emboss</td>
+<td>0</td>
+<td>-</td>
+</tr>
+<tr>
+<td>blur</td>
+<td>0</td>
+<td>-</td>
+</tr>
+<tr>
+<td>negate</td>
+<td>0</td>
+<td>-</td>
+</tr>
+<tr>
+<td>contrast</td>
+<td>1</td>
+<td><code>-100</code> - <code>100</code></td>
+</tr>
+<tr>
+<td>resize</td>
+<td>2</td>
+<td><code>integer</code> - <code>integer</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong><em>Note:</em></strong> In situations devoid of parameters, an empty array is the automatic result. Commands like grayscale and blur do not require parameter specification. </p>
+<h3 id="src">src</h3>
+<p>src, a moniker of source file, is the file intended for modification.</p>
+<h3 id="out">out</h3>
+<p>out, like src, is also a moniker - short for the output file.</p>
+<h2 id="examples">Examples</h2>
+<p>Applying a red filter:</p>
+<pre><code>vendor/bin/dumbflower colorize [255,0,0] --src=foo.png --out=bar.png</code></pre>
+<p>Resizing an image:</p>
+<pre><code>vendor/bin/dumbflower resize [250,125] --src=foo.png --out=bar.png</code></pre>
+<h2 id="directories">Directories</h2>
+<p>The dumflower console is capable of asynchronously watching the file system. The implied potency is directory monitoring - file filtering is a possibility via an auxiliary command. Dumbflower modifies all new files added to a directory.  The standard format for directory watching is:</p>
+<pre><code>vendor/bin/dumbflower watch --dir=&lt;folder&gt; --acmd=&lt;command&gt; &lt;args&gt;</code></pre>
+<h3 id="dir">dir</h3>
+<p>Short for directory. It works exclusively with the watch command.</p>
+<h3 id="acmd">acmd</h3>
+<p>Short for auxiliary command, the acmd option only works with the watch command.</p>
+<h2 id="example">Example</h2>
+<p>Apply a brightness filter of -30 to every image added to the <code>img</code> directory.</p>
+<pre><code>vendor/bin/dumbflower watch --dir=img --acmd=brightness [-30]</code></pre>
+                    </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://ace411.github.com/dumbflower/js/emojify.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script src="https://ace411.github.com/dumbflower/js/bigSlide.js"></script>
+    <script src="https://ace411.github.com/dumbflower/js/hide-on-scroll.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('.menu-link').bigSlide({
+            'easyClose': true
+        });
+    });
+    </script>
+
+            
+        
+        
+    
+</body>
+</html>
