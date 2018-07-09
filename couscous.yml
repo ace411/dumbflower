@@ -6,6 +6,10 @@ search: true
 
 subTitle: A simple image manipulation library for PHP
 
+include:
+  - docs
+  - assets
+
 exclude:
   - vendor
   - src
@@ -18,7 +22,26 @@ github:
   user: ace411
   repo: dumbflower
 
+menu:
+  sections:
+    installation:
+      name: Installation
+      items:
+        home:
+          text: Installation
+          relativeUrl: index.html
+    usage:
+      name: Usage
+      items:
+        console:
+          text: Console
+          relativeUrl: console.html
+        uploads:
+          text: Uploads
+          relativeUrl: uploads.html
+
 template: 
-  url: https://github.com/moqmar/mintlook-couscous
+  index: install.md
+  url: https://github.com/ovac/ovac-couscous-template
 
 baseUrl: https://ace411.github.com/dumbflower
