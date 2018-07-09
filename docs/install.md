@@ -1,6 +1,3 @@
----
-title: Library Installation
----
 <div style="display: flex; flex-wrap: nowrap; flex-flow: column; align-content: center; align-items: center; justify-content: center;">
     <img src="https://ucarecdn.com/43f41248-6a21-4428-88b7-084e1f13e050/dumbflowerlogo480x270.png" alt="dumbflower logo">
     <div style="display: flex; flex-flow: row; height: 20px; flex-wrap: nowrap; margin-bottom: 1.4rem;">

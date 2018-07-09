@@ -1,6 +1,3 @@
----
-title: dumbflower console
----
 
 The dumbflower console enables one to apply filters to and resize images on the fly - in an ad-hoc fashion. Depending on a user's preference, said actions are applicable on a single file or multiple new files in a directory. The standard format of the console is as follows:
 
