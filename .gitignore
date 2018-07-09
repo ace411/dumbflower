@@ -1,4 +1,10 @@
 /vendor/
 /composer.lock
 /phpunit.xml
+<<<<<<< HEAD
 /img/
+=======
+/img/
+/assets/
+/.couscous/
+>>>>>>> documentation

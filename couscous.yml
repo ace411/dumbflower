@@ -1,0 +1,44 @@
+title: dumbflower
+
+search: true
+
+subTitle: A simple image manipulation library for PHP
+
+include:
+  - docs
+  - assets
+
+exclude:
+  - vendor
+  - src
+  - tests
+  - website
+
+branch: gh-pages
+
+github:
+  user: ace411
+  repo: dumbflower
+
+menu:
+  sections:
+    usage:
+      name: Installation and Usage
+      items:
+        home: 
+          text: Install
+          relativeUrl: index.html
+        console:
+          text: Console
+          relativeUrl: console.html
+        uploads:
+          text: Uploads
+          relativeUrl: uploads.html
+
+template: 
+  index: install.md
+  url: https://github.com/pnowy/CouscousNativeTemplate
+
+baseUrl: https://ace411.github.com/dumbflower
+
+footerText: Built by Lochemem Bruno Michael and licensed under the MIT license
