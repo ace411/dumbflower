@@ -40,3 +40,5 @@ template:
   url: https://github.com/pnowy/CouscousNativeTemplate
 
 baseUrl: https://ace411.github.com/dumbflower
+
+footerText: Built by Lochemem Bruno Michael and licensed under the MIT license
