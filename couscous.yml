@@ -1,7 +1,5 @@
 title: dumbflower
 
-logo: https://github.com/ace411/dumbflower/blob/master/assets/icon.png
-
 search: true
 
 subTitle: A simple image manipulation library for PHP
@@ -24,15 +22,12 @@ github:
 
 menu:
   sections:
-    installation:
-      name: Installation
-      items:
-        home:
-          text: Installation
-          relativeUrl: index.html
     usage:
-      name: Usage
+      name: Installation and Usage
       items:
+        home: 
+          text: Install
+          relativeUrl: index.html
         console:
           text: Console
           relativeUrl: console.html
@@ -42,6 +37,6 @@ menu:
 
 template: 
   index: install.md
-  url: https://github.com/ovac/ovac-couscous-template
+  url: https://github.com/pnowy/CouscousNativeTemplate
 
 baseUrl: https://ace411.github.com/dumbflower
